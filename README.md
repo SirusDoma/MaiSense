@@ -10,7 +10,7 @@ This API write the state of sensors directly into game memory.
 ## Usage ##
 
 1. Build the project
-2. include the `include` folder and add `Sensor.hpp` into your project.
+2. include the `include` folder and add `Sensor.hpp` into your code and link the lib into your project as well.
 3. Instantiate `MaiSense::Sensor` class, you can also specify module name (e.g `maimai.exe`).
 4. Activate process hook by calling `MaiSense::Sensor::Connect()`.
 5. Activate and Deactivate sensor by calling `MaiSense::Sensor::Activate()` and `MaiSense::Sensor::Deactivate()` respectively.
