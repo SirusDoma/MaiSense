@@ -36,9 +36,7 @@ namespace MaiSense
     {
         // Return existing address if previous query handle still valid
         if (hProcess && baseAddress)
-        {
             return baseAddress;
-        }
 
         // Define variables to query modules
         PROCESSENTRY32 entry;
@@ -48,17 +46,20 @@ namespace MaiSense
         bool found = false;
         LPCVOID address = 0;
 
+        // Create snapshots of processes
         entry.dwSize = sizeof(PROCESSENTRY32);
         HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL);
 
-        // Get Process from window handle
+        // Get Process from processes snapshot
         if (Process32First(snapshot, &entry) == TRUE)
         {
             while (Process32Next(snapshot, &entry) == TRUE)
             {
+                // Check for target process that match with moduleName
                 std::string exeFile = entry.szExeFile;
                 if (exeFile.find(moduleName) != std::string::npos)
                 {
+                    // Process found, attempt to open process
                     hProcess = OpenProcess(
                         PROCESS_ALL_ACCESS,
                         FALSE,
@@ -100,6 +101,7 @@ namespace MaiSense
             }
         }
 
+        // No main module found
         if (!found)
             std::fprintf(stderr, "MAISENSE: Failed to find module.\n");
 
@@ -139,7 +141,7 @@ namespace MaiSense
         // Calculate address
         LPVOID target = (LPVOID)GetTargetAddress(address, relative);
 
-        // Read data from target address process memory
+        // Write data to target address process memory
         SIZE_T bytesWritten = 0;
         if (!WriteProcessMemory(hProcess, target, buffer, size, &bytesWritten))
             std::fprintf(stderr, "MAISENSE: Failed to write process memory.\n");
