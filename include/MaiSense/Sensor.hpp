@@ -14,16 +14,14 @@ namespace MaiSense
     {
     private:
         const DWORD TOUCH_POINTER_ADDRESS = 0xB40D28;
-        const DWORD P1_ADDRESS = 52;
-        const DWORD P2_ADDRESS = 56;
+        const DWORD P1_PADDING_ADDRESS = 52;
+        const DWORD P2_PADDING_ADDRESS = 56;
 
         Process *process;
         DWORD sensorAddress;
 
         std::string moduleName;
         std::unordered_map<SensorId, bool> states;
-
-        bool Update(SensorId sensorId, bool value);
 
     public:
         static const SensorId A1 = 1 << 0,
@@ -50,8 +48,11 @@ namespace MaiSense
 
         bool Connect();
 
+        bool Update(SensorId sensorId, bool value);
         bool Activate(SensorId sensorId);
         bool Deactivate(SensorId sensorId);
+
+        Process *GetProcess();
     };
 }
 

@@ -11,10 +11,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Process.hpp">
-      <Filter>Sources</Filter>
+    <ClInclude Include="include\MaiSense\Sensor.hpp">
+      <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="include\Sensor.hpp">
+    <ClInclude Include="include\MaiSense\Process.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -23,9 +23,6 @@
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="src\Sensor.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\main.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
