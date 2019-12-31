@@ -1,7 +1,7 @@
-#include "Sensor.hpp"
+#include <MaiSense/Sensor.hpp>
 
 #include <ctime>
-#include "Process.hpp"
+#include <MaiSense/Process.hpp>
 
 namespace MaiSense
 {
@@ -35,7 +35,7 @@ namespace MaiSense
         {
             // Hook created, find the pointer address of sensor
             // TODO: Add P2 Support(?)
-            sensorAddress = process->Read(TOUCH_POINTER_ADDRESS) + P1_ADDRESS;
+            sensorAddress = process->Read(TOUCH_POINTER_ADDRESS) + P1_PADDING_ADDRESS;
             return true;
         }
 
@@ -83,5 +83,10 @@ namespace MaiSense
     bool Sensor::Deactivate(SensorId sensorId)
     {
         return Update(sensorId, false);
+    }
+    
+    Process *Sensor::GetProcess()
+    {
+        return process;
     }
 }

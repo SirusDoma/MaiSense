@@ -1,4 +1,4 @@
-#include "Process.hpp"
+#include <MaiSense/Process.hpp>
 
 namespace MaiSense
 {
@@ -42,8 +42,6 @@ namespace MaiSense
         PROCESSENTRY32 entry;
         HMODULE hMods[1024];
         DWORD cbNeeded;
-
-        bool found = false;
         LPCVOID address = 0;
 
         // Create snapshots of processes
@@ -89,12 +87,10 @@ namespace MaiSense
                 {
                     // Check if module matched with target module name
                     std::string name = szModName;
-                    if (!found && name.find(moduleName) != std::string::npos)
+                    if (name.find(moduleName) != std::string::npos)
                     {
                         // Module found, get the address
-                        found = true;
                         address = hMods[i];
-
                         break;
                     }
                 }
@@ -102,7 +98,7 @@ namespace MaiSense
         }
 
         // No main module found
-        if (!found)
+        if (!address)
             std::fprintf(stderr, "MAISENSE: Failed to find module.\n");
 
         baseAddress = address;
