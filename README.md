@@ -2,12 +2,21 @@
 
 - **Author**: SirusDoma
 - **Email**: com@cxo2.me
-- **Latest Version**: 0.8.5
+- **API Version**: 0.8.5
 
 Touch Sensor API for MaiMai Finale.  
 This API write the state of sensors directly into game memory.
 
 ## Usage ##
+
+### Hook application ###
+
+You can use prebuilt hook in [Release page](https://github.com/SirusDoma/MaiSense/releases/). Make sure to run the game first before launching hook.    
+WIP: Currently only support keyboard input:
+- Key 1~8 as for A1~A8 Sensors respectively.
+- Numpad 1~8 as for B1~B8 Sensors respectively.
+
+### API Usage ###
 
 1. Build the project
 2. include the `include` folder and add `Sensor.hpp` into your code and link the lib into your project as well.
@@ -24,6 +33,10 @@ int main()
     // Initialize sensor client
     // you can leave the argument empty and it will search process name that include "maimai"
     auto sensor = MaiSense::Sensor("maimai_dump_.exe"); 
+
+    // Hook the process
+    if (!sensor.Connect())
+        return -1; // Something went wrong during hook process (Run as admin might solve the problem)
 
     // Best do this in separate thread;
     while (true)
