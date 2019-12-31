@@ -17,7 +17,7 @@ This API write the state of sensors directly into game memory.
 
 Example Code:
 ```
-#include "Sensor.hpp"
+#include "MaiSense/Sensor.hpp"
 
 int main()
 {
@@ -30,9 +30,9 @@ int main()
     {
         // Do your input checking here
         if (RawInput or Touchscreen or whatever condition......)
-          sensor.Activate(MaiSensor::Sensor::A7); // turn on A7 sensor
+          sensor.Activate(MaiSense::Sensor::A7); // turn on A7 sensor
         else
-          sensor.Deactivate(MaiSensor::Sensor::A7); // turn off A7 sensor
+          sensor.Deactivate(MaiSense::Sensor::A7); // turn off A7 sensor
         
         // Let's not take the entire cpu
         Sleep(100);
