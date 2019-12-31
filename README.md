@@ -13,8 +13,8 @@ This API write the state of sensors directly into game memory.
 
 You can use prebuilt hook in [Release page](https://github.com/SirusDoma/MaiSense/releases/). Make sure to run the game first before launching hook.    
 WIP: Currently only support keyboard input:
-- Key 1~8 as for A1~A8 Sensors respectively.
-- Numpad 1~8 as for B1~B8 Sensors respectively.
+- Key 1\~8 as for A1\~A8 Sensors respectively.
+- Numpad 1\~8 as for B1\~B8 Sensors respectively.
 
 ### API Usage ###
 
