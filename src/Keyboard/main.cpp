@@ -69,7 +69,7 @@ int main()
         case VK_NUMPAD6: // NUMPAD 6
             sensor.Update(MaiSense::Sensor::B6, ev.Active);
             break;
-        case VK_NUMPAD7: // NUMPAD 
+        case VK_NUMPAD7: // NUMPAD 7
             sensor.Update(MaiSense::Sensor::B7, ev.Active);
             break;
         case VK_NUMPAD8: // NUMPAD 8
