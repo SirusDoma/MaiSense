@@ -19,7 +19,8 @@ int main()
         return -1;
     }
 
-    MaiSense::Input::Keyboard::SetCallback([&](MaiSense::Input::KeyEvent ev) {
+    MaiSense::Input::Keyboard::SetCallback([&](MaiSense::Input::KeyEvent ev) 
+    {
         // For keycode refer to following doc:
         // https://docs.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
         switch (ev.KeyCode)
@@ -75,14 +76,16 @@ int main()
         case VK_NUMPAD8: // NUMPAD 8
             sensor.Update(MaiSense::Sensor::B8, ev.Active);
             break;
+        case VK_ESCAPE:
+            exit(0);
+            return;
         }
     });
     
     MSG msg;
     while (GetMessage(&msg, NULL, 0, 0))
     {
-        auto ev = MaiSense::Input::Keyboard::GetLastKeyEvent();
-        if (!msg.hwnd || ev.KeyCode == VK_ESCAPE)
+        if (!msg.hwnd)
             return 0;
     }
 
