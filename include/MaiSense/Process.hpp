@@ -16,17 +16,32 @@ namespace MaiSense
     private:
         std::string moduleName;
 
-        HANDLE hProcess;
-        LPCVOID baseAddress;
+        int processId, threadId;
+        HANDLE hProcess, hThread;
+        LPCVOID hModule;
 
         DWORD GetTargetAddress(DWORD address, bool relative);
 
     public:
         Process(std::string moduleName);
+        Process(HANDLE hProcess, HANDLE hThread, int processId, int threadId);
+
         virtual ~Process();
 
+        static Process Create(std::string path, bool suspended = false);
+        static Process Create(std::string path, std::string args = "", bool suspended = false);
+
+        int GetProcessId();
+        int GetThreadId();
+
+        HANDLE  GetProcessHandle();
+        HANDLE  GetThreadHandle();
         LPCVOID GetBaseAddress();
-        HANDLE *GetProcessHandle();
+
+        bool Resume();
+        bool Suspend();
+
+        void Wait();
 
         unsigned int Read(DWORD address, bool relative = true);
         unsigned int Write(DWORD address, LPCVOID buffer, SIZE_T size, bool relative = true);
