@@ -1,51 +1,45 @@
 #include <MaiSense/Sensor.hpp>
 
 #include <ctime>
-#include <MaiSense/Process.hpp>
 
 namespace MaiSense
 {
-    Sensor::Sensor()
-        : Sensor::Sensor("maimai")
-    {
-    }
 
-    Sensor::Sensor(const std::string &moduleName) : 
-        moduleName(moduleName),
-        process(0),
-        sensorAddress(0)
+    Sensor::Sensor() :
+        activeFlags(0),
+        inactiveFlags(0)
     {
     }
 
     Sensor::~Sensor()
     {
-        if (process)
-            delete process;
     }
 
     bool Sensor::Connect()
     {
         // Process hook is created, no need to recreate
-        if (process)
+        if (activeFlags && inactiveFlags)
             return true;
 
-        // Attempt to create process hook
-        process = new Process(moduleName);
-        if (process && process->GetProcessHandle())
+        // Lookup for sensor addresses
+        int input = *(int*)(TOUCH_POINTER_ADDRESS);
+        if (input)
         {
-            // Hook created, find the pointer address of sensor
+            // Read sensor flag from given address
             // TODO: Add P2 Support(?)
-            sensorAddress = process->Read(TOUCH_POINTER_ADDRESS) + P1_PADDING_ADDRESS;
+            activeFlags   = (int*)(input + P1_OFFSET_ACTIVE_ADDRESS);
+            inactiveFlags = (int*)(input + P1_OFFSET_INACTIVE_ADDRESS);
+
             return true;
         }
 
         return false;
     }
 
-    bool Sensor::Update(SensorId sensorId, bool value)
+    bool Sensor::SetSensorState(SensorId sensorId, bool value)
     {
-        // Attempt to estabilish non existent hook before updating sensor
-        if (!process || !Connect())
+        // Attempt to read sensor state in case not initialized yet
+        if (!Connect())
             return false;
 
         // Validate Sensor Id (there's still so much gap tho)
@@ -53,40 +47,87 @@ namespace MaiSense
             return false;
 
         // No need to trigger the sensor if sensor already in desired state
-        if (states[sensorId] == value)
+        if (states.count(sensorId) > 0 && states[sensorId] == value)
             return true;
 
         // Update sensor states
-        int sensor = 0;
         states[sensorId] = value;
 
-        // Build sensor bits
-        for (auto state : states)
+        // Write sensor bits into memory
+        if (value)
         {
-            if (state.second)
-                sensor |= state.first;
+            *activeFlags   |= sensorId;
+            *inactiveFlags &= ~sensorId;
+        }
+        else
+        {
+            *activeFlags   &= ~sensorId;
+            *inactiveFlags |= sensorId;
         }
 
-        // Write sensor bits into target process, revert state when failed
-        bool success = process->Write(sensorAddress, &sensor, sizeof(sensor), false);
-        if (!success)
-            states[sensorId] = !value;
+        return true;
+    }
 
-        return success;
+    bool Sensor::Remove(SensorId sensorId, bool value)
+    {
+        // Attempt to read sensor state in case not initialized yet
+        if (!Connect())
+            return false;
+
+        // Validate Sensor Id (there's still so much gap tho)
+        if (sensorId < Sensor::A1 || sensorId > Sensor::C)
+            return false;
+
+        // Remove the flag
+        states.erase(sensorId);
+        *activeFlags   &= ~sensorId;
+        *inactiveFlags &= ~sensorId;
+ 
+        return true;
+    }
+
+    void Sensor::Queue(SensorId sensorId, bool value)
+    {
+        auto message = Message();
+        message.SensorId = sensorId;
+        message.Value    = value;
+
+        queue.push(message);
     }
 
     bool Sensor::Activate(SensorId sensorId)
     {
-        return Update(sensorId, true);
+        return SetSensorState(sensorId, true);
     }
 
     bool Sensor::Deactivate(SensorId sensorId)
     {
-        return Update(sensorId, false);
+        return SetSensorState(sensorId, false);
     }
     
-    Process *Sensor::GetProcess()
+    bool Sensor::ProcessQueue()
     {
-        return process;
+        int processed = 0;
+        while (!queue.empty())
+        {
+            auto message = queue.front();
+            SetSensorState(message.SensorId, message.Value);
+
+            processed++;
+            queue.pop();
+        }
+
+        return processed > 0;
+    }
+
+    void Sensor::Reset()
+    {
+        // Attempt to read sensor state in case not initialized yet
+        if (!Connect())
+            return;
+
+        // Reset sensor bitflag each game frame
+        *activeFlags   = 0;
+        *inactiveFlags = 0;
     }
 }

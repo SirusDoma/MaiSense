@@ -1,7 +1,7 @@
-#ifndef MAISENSE_KEYEVENT_HPP
-#define MAISENSE_KEYEVENT_HPP
+#ifndef MAISENSE_KEY_EVENT_HPP
+#define MAISENSE_KEY_EVENT_HPP
 
-namespace MaiSense::Input
+namespace MaiSense
 {
     struct KeyEvent
     {

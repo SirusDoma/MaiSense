@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{255303BA-5155-4849-B4BF-828A615EF916}</ProjectGuid>
+    <ProjectGuid>{60C5B665-943F-476F-8EDB-C57DDFE74560}</ProjectGuid>
     <RootNamespace>InputKeyboard</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -70,24 +70,24 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <TargetName>MaiSense.Keyboard</TargetName>
+    <TargetName>MaiSense.Launcher</TargetName>
     <OutDir>build\$(Configuration)\</OutDir>
-    <IntDir>temp\$(Configuration)\</IntDir>
+    <IntDir>temp\$(Configuration)\launcher\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <TargetName>MaiSense.Keyboard</TargetName>
+    <TargetName>MaiSense.Launcher</TargetName>
     <OutDir>build\$(Configuration)\</OutDir>
-    <IntDir>temp\$(Configuration)\</IntDir>
+    <IntDir>temp\$(Configuration)\launcher\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <TargetName>MaiSense.Keyboard</TargetName>
+    <TargetName>MaiSense.Launcher</TargetName>
     <OutDir>build\$(Configuration)\</OutDir>
-    <IntDir>temp\$(Configuration)\</IntDir>
+    <IntDir>temp\$(Configuration)\launcher\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <TargetName>MaiSense.Keyboard</TargetName>
+    <TargetName>MaiSense.Launcher</TargetName>
     <OutDir>build\$(Configuration)\</OutDir>
-    <IntDir>temp\$(Configuration)\</IntDir>
+    <IntDir>temp\$(Configuration)\launcher\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -159,12 +159,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Keyboard\Keyboard.cpp" />
-    <ClCompile Include="src\Keyboard\main.cpp" />
+    <ClCompile Include="src\Launcher\Injector.cpp" />
+    <ClCompile Include="src\Launcher\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Keyboard\Keyboard.hpp" />
-    <ClInclude Include="src\Keyboard\KeyEvent.hpp" />
+    <ClInclude Include="include\MaiSense\Launcher\Injector.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -3,7 +3,9 @@
 
 #include <string>
 #include <windows.h>
-#include <unordered_map> 
+#include <unordered_map>
+#include <queue>
+#include <vector>
 
 typedef int SensorId;
 
@@ -13,18 +15,26 @@ namespace MaiSense
     class Sensor
     {
     private:
-        const DWORD TOUCH_POINTER_ADDRESS = 0xB40D28;
-        const DWORD P1_PADDING_ADDRESS = 52;
-        const DWORD P2_PADDING_ADDRESS = 56;
+        const int TOUCH_POINTER_ADDRESS = 0xF40D28;
+        const int P1_OFFSET_ACTIVE_ADDRESS = 52;
+        const int P2_OFFSET_ACTIVE_ADDRESS = 56;
+        const int P1_OFFSET_INACTIVE_ADDRESS = 60;
+        const int P2_OFFSET_INACTIVE_ADDRESS = 64;
 
-        Process *process;
-        DWORD sensorAddress;
+        struct Message
+        {
+            SensorId SensorId;
+            bool Value;
+        };
 
-        std::string moduleName;
+        int* activeFlags;
+        int* inactiveFlags;
         std::unordered_map<SensorId, bool> states;
+        std::queue<Message> queue;
 
     public:
-        static const SensorId A1 = 1 << 0,
+        static const SensorId 
+            A1 = 1 << 0,
             B1 = 1 << 1,
             A2 = 1 << 2,
             B2 = 1 << 3,
@@ -43,16 +53,19 @@ namespace MaiSense
             C  = 1 << 19;
 
         Sensor();
-        Sensor(const std::string &moduleName);
+
         ~Sensor();
 
         bool Connect();
+        bool SetSensorState(SensorId sensorId, bool value);
+        void Queue(SensorId sensorId, bool value);
 
-        bool Update(SensorId sensorId, bool value);
         bool Activate(SensorId sensorId);
         bool Deactivate(SensorId sensorId);
+        bool Remove(SensorId sensorId, bool value);
 
-        Process *GetProcess();
+        bool ProcessQueue();
+        void Reset();
     };
 }
 

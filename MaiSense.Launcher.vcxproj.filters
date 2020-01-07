@@ -11,18 +11,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Keyboard\main.cpp">
+    <ClCompile Include="src\Launcher\main.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\Keyboard\Keyboard.cpp">
+    <ClCompile Include="src\Launcher\Injector.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Keyboard\KeyEvent.hpp">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Keyboard\Keyboard.hpp">
+    <ClInclude Include="include\MaiSense\Launcher\Injector.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
