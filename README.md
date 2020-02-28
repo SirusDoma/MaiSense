@@ -16,6 +16,7 @@ API need to be injected into the main client to make it work.
 WIP: Currently only support keyboard input:
 - Key 1\~8 as for A1\~A8 Sensors respectively
 - Numpad 1\~8 as for B1\~B8 Sensors respectively
+- Key 0 for C Sensor
 
 For the API, refer to [`Sensor.hpp`](https://github.com/SirusDoma/MaiSense.API/blob/master/include/MaiSense/Sensor.hpp).  
 Make sure to include necessary headers and lib files.
