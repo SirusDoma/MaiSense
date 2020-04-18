@@ -24,7 +24,7 @@ namespace MaiSense
         LPVOID    lpParam
     ) = CreateWindowExA;
 
-    DWORD(WINAPI* TrueGameInput)() = (DWORD(WINAPI*)())0x00516107;
+    DWORD(WINAPI* TrueGameInput)() = (DWORD(WINAPI*)())0x00571610;
 
     HHOOK   InputManager::hHook;
     HWND    InputManager::hWnd;
