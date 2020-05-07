@@ -5,8 +5,8 @@
 #include <functional>
 #include <Windows.h>
 
-#include <MaiSense/Input/InputController.hpp>
-#include <MaiSense/Input/KeyEvent.hpp>
+#include <MaiSense/InputController.hpp>
+#include <MaiSense/KeyEvent.hpp>
 
 namespace MaiSense
 {

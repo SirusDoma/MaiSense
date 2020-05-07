@@ -2,7 +2,7 @@
 #define MAISENSE_INJECTOR_HPP
 
 #include <string>
-#include <MaiSense/Process.hpp>
+#include <MaiSense/Launcher/Process.hpp>
 
 namespace MaiSense::Launcher
 {

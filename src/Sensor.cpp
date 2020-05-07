@@ -1,7 +1,5 @@
 #include <MaiSense/Sensor.hpp>
 
-#include <ctime>
-
 namespace MaiSense
 {
 
@@ -92,7 +90,7 @@ namespace MaiSense
         message.SensorId = sensorId;
         message.Value    = value;
 
-        queue.push(message);
+        queue.push_back(message);
     }
 
     bool Sensor::Activate(SensorId sensorId)
@@ -107,17 +105,31 @@ namespace MaiSense
     
     bool Sensor::ProcessQueue()
     {
-        int processed = 0;
-        while (!queue.empty())
-        {
-            auto message = queue.front();
-            SetSensorState(message.SensorId, message.Value);
+        int evCount = 0;
+        auto it = queue.begin();
 
-            processed++;
-            queue.pop();
+        std::unordered_map<SensorId, bool> processed;
+        while (it != queue.end())
+        {
+            auto message = *it;
+            SetSensorState(message.SensorId, message.Value);
+            
+            it = queue.erase(it);
+            processed[message.SensorId] = message.Value;
+
+            evCount++;
         }
 
-        return processed > 0;
+        // Set the leftover states due touch move.
+        // When the touch is moved and out of sensor region bound it give no signal to former sensor that it no longer active
+        // Therefore we need to clear those sensor flag manually
+        for (auto state : states)
+        {
+            if (state.second && (processed.count(state.first) == 0 || !processed[state.first]))
+                SetSensorState(state.first, false);
+        }
+
+        return evCount > 0;
     }
 
     void Sensor::Reset()

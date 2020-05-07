@@ -1,5 +1,4 @@
-#include "..\include\MaiSense\Process.hpp"
-#include <MaiSense/Process.hpp>
+#include <MaiSense/Launcher/Process.hpp>
 
 namespace MaiSense
 {

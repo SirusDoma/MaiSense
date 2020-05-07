@@ -1,8 +1,5 @@
-#include "pch.h"
-
-#include <MaiSense/Input/InputManager.hpp>
-#include <MaiSense/Input/InputController.hpp>
-#include <MaiSense/Process.hpp>
+#include <MaiSense/InputManager.hpp>
+#include <MaiSense/InputController.hpp>
 
 #include <detours.h>
 #include <string>
@@ -23,6 +20,14 @@ namespace MaiSense
         HINSTANCE hInstance,
         LPVOID    lpParam
     ) = CreateWindowExA;
+
+    /*
+    BOOL(__thiscall* TrueGetTouchState)(void*, int, char, int) = (BOOL(__thiscall*)(void*, int, char, int))0x00582860;
+    BOOL(__cdecl* TrueGetInputState)(char, char, int)          = (BOOL(__cdecl*)(char, char, int))0x005725B0;
+    BOOL(__cdecl* TrueGetButtonState)(char, char, int)         = (BOOL(__cdecl*)(char, char, int))0x00572430;
+    BOOL(WINAPI*  TrueGetButtonFlag)(int)                      = (int(WINAPI*)(int))0x00582830;
+    char(WINAPI*  TrueGetCharacterState)(int*)                 = (char(WINAPI*)(int*))0x0060A580;
+    */
 
     DWORD(WINAPI* TrueGameInput)() = (DWORD(WINAPI*)())0x00571610;
 
@@ -84,15 +89,6 @@ namespace MaiSense
         return !DetourIsHelperProcess();
     }
 
-    DWORD __stdcall InputManager::HookGameInput()
-    {
-        GetSensor()->Reset();
-        auto result = TrueGameInput();
-        GetSensor()->ProcessQueue();
-
-        return result;
-    }
-
     HWND WINAPI InputManager::HookCreateWindowExA(
         DWORD     dwExStyle,
         LPCSTR    lpClassName,
@@ -123,6 +119,14 @@ namespace MaiSense
             lpParam
         );
 
+        if (!RegisterTouchWindow(hWnd, TWF_WANTPALM))
+        {
+            MessageBoxA(NULL, ("MAISENSE: Failed to register touch: " + std::to_string(GetLastError())).c_str(), "Hook", MB_ICONEXCLAMATION);
+            CloseWindow(hWnd);
+
+            return NULL;
+        }
+
         hHook = SetWindowsHookEx(WH_GETMESSAGE, GetMsgProc, hInstance, GetCurrentThreadId());
         if (hHook == NULL)
         {
@@ -150,4 +154,12 @@ namespace MaiSense
         return CallNextHookEx(hHook, nCode, wParam, lParam);
     }
     
+    DWORD __stdcall InputManager::HookGameInput()
+    {
+        GetSensor()->Reset();
+        auto result = TrueGameInput();
+        GetSensor()->ProcessQueue();
+
+        return result;
+    }
 }

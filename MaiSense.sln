@@ -7,10 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MaiSense", "MaiSense.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MaiSense.Launcher", "MaiSense.Launcher.vcxproj", "{60C5B665-943F-476F-8EDB-C57DDFE74560}"
 	ProjectSection(ProjectDependencies) = postProject
-		{EC890B06-E505-4217-BEFC-6F63CCDC7CA3} = {EC890B06-E505-4217-BEFC-6F63CCDC7CA3}
+		{E69E1597-4570-4115-BAE6-EC49177F62E8} = {E69E1597-4570-4115-BAE6-EC49177F62E8}
 	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MaiSense.Input", "MaiSense.Input.vcxproj", "{EC890B06-E505-4217-BEFC-6F63CCDC7CA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,20 +34,12 @@ Global
 		{60C5B665-943F-476F-8EDB-C57DDFE74560}.Release|x64.Build.0 = Release|x64
 		{60C5B665-943F-476F-8EDB-C57DDFE74560}.Release|x86.ActiveCfg = Release|Win32
 		{60C5B665-943F-476F-8EDB-C57DDFE74560}.Release|x86.Build.0 = Release|Win32
-		{EC890B06-E505-4217-BEFC-6F63CCDC7CA3}.Debug|x64.ActiveCfg = Debug|x64
-		{EC890B06-E505-4217-BEFC-6F63CCDC7CA3}.Debug|x64.Build.0 = Debug|x64
-		{EC890B06-E505-4217-BEFC-6F63CCDC7CA3}.Debug|x86.ActiveCfg = Debug|Win32
-		{EC890B06-E505-4217-BEFC-6F63CCDC7CA3}.Debug|x86.Build.0 = Debug|Win32
-		{EC890B06-E505-4217-BEFC-6F63CCDC7CA3}.Release|x64.ActiveCfg = Release|x64
-		{EC890B06-E505-4217-BEFC-6F63CCDC7CA3}.Release|x64.Build.0 = Release|x64
-		{EC890B06-E505-4217-BEFC-6F63CCDC7CA3}.Release|x86.ActiveCfg = Release|Win32
-		{EC890B06-E505-4217-BEFC-6F63CCDC7CA3}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {670D5EC6-74C3-48BC-9971-84B8BF6D4511}
 		        SolutionGuid = {B2140A4E-FC02-4FB8-9F06-D551A5F2B6BE}
+		SolutionGuid = {670D5EC6-74C3-48BC-9971-84B8BF6D4511}
 	EndGlobalSection
 EndGlobal

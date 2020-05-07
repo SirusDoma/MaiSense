@@ -1,5 +1,5 @@
-#ifndef MAISENSE_PROCESS_HPP
-#define MAISENSE_PROCESS_HPP
+#ifndef MAISENSE_LAUNCHER_PROCESS_HPP
+#define MAISENSE_LAUNCHER_PROCESS_HPP
 
 #include <windows.h>
 #include <stdio.h>

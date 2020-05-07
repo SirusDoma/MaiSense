@@ -1,14 +1,22 @@
-#include "pch.h"
-
 #include <MaiSense/Sensor.hpp>
-#include <MaiSense/Input/InputManager.hpp>
-#include <MaiSense/Input/KeyboardController.hpp>
+#include <MaiSense/InputManager.hpp>
+#include <MaiSense/TouchController.hpp>
+#include <MaiSense/KeyboardController.hpp>
+#include <MaiSense/MouseController.hpp>
+#include <MaiSense/SensorChecker.hpp>
+#include <MaiSense/SensorProcessor.hpp>
 
 #include <string>
 
+#pragma warning (disable : 4996)
+
 using namespace MaiSense;
 
+TouchController touchController;
 KeyboardController keyboardController;
+MouseController mouseController;
+SensorChecker sensorChecker;
+SensorProcessor processor;
 
 BOOL APIENTRY DllMain(HMODULE hMod, DWORD cause, LPVOID lpReserved)
 {
@@ -17,6 +25,31 @@ BOOL APIENTRY DllMain(HMODULE hMod, DWORD cause, LPVOID lpReserved)
 
     if (cause == DLL_PROCESS_ATTACH) 
     {
+        AllocConsole();
+        freopen("CONIN$", "r", stdin);
+        freopen("CONOUT$", "w", stdout);
+
+        touchController.SetCallback([&](TouchEvent ev) 
+        {
+            processor.Handle(ev);
+            if (sensorChecker.GetScreenWidth() == 0 || sensorChecker.GetScreenHeight() == 0)
+            {
+                RECT clientRect;
+                GetClientRect(InputManager::GetGameWindow(), &clientRect);
+                sensorChecker.SetScreenSize
+                (
+                    clientRect.left + clientRect.right,
+                    clientRect.top + clientRect.bottom
+                );
+            }
+
+            if (processor.GetChecker() == NULL)
+                processor.SetChecker(&sensorChecker);
+
+            if (processor.GetSensor() == NULL)
+                processor.SetSensor(InputManager::GetSensor());
+        });
+
         keyboardController.SetCallback([&](KeyEvent ev)
         {
             auto sensor = InputManager::GetSensor();
@@ -75,9 +108,16 @@ BOOL APIENTRY DllMain(HMODULE hMod, DWORD cause, LPVOID lpReserved)
                 break;
             }
         });
+        mouseController.SetCallback([&](MouseEvent ev)
+        {
+            if (ev.MButton)
+                mouseController.EmulateTouch();
+        });
 
         InputManager::Hook();
+        InputManager::Install(&touchController);
         InputManager::Install(&keyboardController);
+        InputManager::Install(&mouseController);
     }
     else if (cause == DLL_PROCESS_DETACH) 
     {

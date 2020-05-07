@@ -154,16 +154,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ProjectReference Include="MaiSense.vcxproj">
-      <Project>{e69e1597-4570-4115-bae6-ec49177f62e8}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="src\Launcher\Injector.cpp" />
     <ClCompile Include="src\Launcher\main.cpp" />
+    <ClCompile Include="src\Launcher\Process.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\MaiSense\Launcher\Injector.hpp" />
+    <ClInclude Include="include\MaiSense\Launcher\Process.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

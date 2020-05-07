@@ -1,9 +1,7 @@
-#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
-
 #include <Windows.h>
 #include <string>
 
-#include <MaiSense/Process.hpp>
+#include <MaiSense/Launcher/Process.hpp>
 #include <MaiSense/Launcher/Injector.hpp>
 
 int main()

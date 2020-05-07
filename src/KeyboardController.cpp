@@ -1,6 +1,4 @@
-#include "pch.h"
-
-#include <MaiSense/Input/KeyboardController.hpp>
+#include <MaiSense/KeyboardController.hpp>
 
 namespace MaiSense
 {

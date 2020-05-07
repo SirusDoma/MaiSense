@@ -30,7 +30,7 @@ namespace MaiSense
         int* activeFlags;
         int* inactiveFlags;
         std::unordered_map<SensorId, bool> states;
-        std::queue<Message> queue;
+        std::vector<Message> queue;
 
     public:
         static const SensorId 
