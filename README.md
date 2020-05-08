@@ -4,7 +4,7 @@
 - **Email**: com@cxo2.me
 - **Version**: 1.0.0
 
-Touch Sensor Input for MaiMai Finale.  
+Touch Sensor Input for SDEY, touchlaundry disco 💦. 
 
 ## How it works ##
 
@@ -22,6 +22,7 @@ The game did **not** emulate any hardware input such as JVS and touch sensors in
 ### Touch Hook ###
 
 Multi touch input is supported. Make sure that touch input emulation from Mouse middle button is not activated, otherwise restart the game.  
+
 Only support 1P with DEV mode only, has no plan to support 2P or any other mode.
 
 ### Mouse Hook ###
