@@ -23,7 +23,7 @@ The game did **not** emulate any hardware input such as JVS and touch sensors in
 
 Multi touch input is supported. Make sure that touch input emulation from Mouse middle button is not activated, otherwise restart the game.  
 
-Only support 1P with DEV mode only, has no plan to support 2P or any other mode.
+Only support 1P with DEV mode only, has no plan to support 2P or any other mode. If you're interested in this feature, consider make a contribution by creating a PR.
 
 ### Mouse Hook ###
 
